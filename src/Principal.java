@@ -3,13 +3,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
 public class Principal {
-    static int idoc=0, iadm=0;
-    static Map<String,Empleado> empleados = new TreeMap<String,Empleado>();
-    static Scanner in = new Scanner(System.in);
+    private static int idoc=0, iadm=0, opcion;
+    private static Map<String,Empleado> empleados = new TreeMap<String,Empleado>();
+    private static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
 
-        int opcion, tipor;
+        //int opcion, tipor;
 
         opcion = 0;
 
@@ -22,51 +22,58 @@ public class Principal {
         DateTimeFormatter dia = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter hora = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalDateTime ahora = LocalDateTime.now();
-        System.out.println("Hola, hoy es " + dia.format(ahora) + "y son las " + hora.format(ahora));
+        System.out.println("Hola, hoy es " + dia.format(ahora) + " y son las " + hora.format(ahora) + '\n');
 
-        while (opcion !=9){
-            System.out.println("Ingrese una opción y presione enter");
-            System.out.println(
-                    "1. Registrar empleado\n"+
-                    "2. Eliminar empleado\n"+
-                    "3. Modificar datos\n"+
-                    "4. Visualizar información\n"+
-                    "5. Listar empleados administrativos\n"+
-                    "6. Listar empleados docentes\n"+
-                    "7. Visualizar empleado administrativo con mayor remuneración\n"+
-                    "8. Listar docentes por materia\n"+
-                    "9. Salir");
+      //  try {
+            while (opcion != 9) {
+                try {
+                    System.out.println("Ingrese una opción y presione enter");
+                    System.out.println(
+                            "1. Registrar empleado\n" +
+                                    "2. Eliminar empleado\n" +
+                                    "3. Modificar datos\n" +
+                                    "4. Visualizar información\n" +
+                                    "5. Listar empleados administrativos\n" +
+                                    "6. Listar empleados docentes\n" +
+                                    "7. Visualizar empleado administrativo con mayor remuneración\n" +
+                                    "8. Listar docentes por materia\n" +
+                                    "9. Salir");
 
-            opcion = in.nextInt();
-            System.out.println("Seleccionaste la opción "+ opcion);
-            switch (opcion) {
-                case 1:
-                    Agregar();
-                    break;
-                case 2:
-                    Eliminar();
-                    break;
-                case 3:
-                case 4:
-                    Mostrar();
-                    break;
-                case 5:
-                    ListAdm();
-                    break;
-                case 6:
-                    ListDoc();
-                    break;
-                case 7:
-                case 8:
-                case 9:
+                    opcion = in.nextInt();
+                    System.out.println("Seleccionaste la opción " + opcion);
 
 
-                default:
-                    System.out.println("Opcion invalida, intente nuevamente");
-
+                    switch (opcion) {
+                        case 1:
+                            Agregar();
+                            break;
+                        case 2:
+                            Eliminar();
+                            break;
+                        case 3:
+                        case 4:
+                            Mostrar();
+                            break;
+                        case 5:
+                            ListAdm();
+                            break;
+                        case 6:
+                            ListDoc();
+                            break;
+                        case 7:
+                        case 8:
+                        case 9:
+                            System.out.println("Saliendo, hasta luego!");
+                            break;
+                        default:
+                            System.out.println("Opcion invalida, intente nuevamente" + '\n');
+                            break;
+                    }
+                } catch (Exception e) {
+                    System.out.println("La opcion debe ser un numero entero. Intente nuevamente" + '\n');
+                    in.nextLine();
+                }
             }
-        }
-
     }
 
     public static void Agregar() {
@@ -159,7 +166,6 @@ public class Principal {
                             }
                         }
                     }
-                    //dni = Integer.parseInt(parambusq);
                     for (Object key : empleados.keySet()) {
                         dni2 = String.valueOf(empleados.get(key).getDni());
                         if (parambusq.equals(dni2)) {
@@ -184,10 +190,11 @@ public class Principal {
     //Muestra Administrativos
     public static void ListAdm() {
         String clase;
+        System.out.println("Los empleados administrativos son:" + '\n');
         for(Object key : empleados.keySet()) {
             clase = empleados.get(key).getClass().getName();
             if (clase.equals("Administrativo")) {
-                System.out.println("-" + empleados.get(key).getNombre() + " " + empleados.get(key).getApellido());
+                System.out.println("- " + key + " " + empleados.get(key).getNombre() + " " + empleados.get(key).getApellido() + '\n');
             }
         }
     }
@@ -195,10 +202,11 @@ public class Principal {
     //Muestra Docentes
     public static void ListDoc() {
         String clase;
+        System.out.println("Los empleados docentes son:" + '\n');
         for(Object key : empleados.keySet()) {
             clase = empleados.get(key).getClass().getName();
             if (clase.equals("Docente")) {
-                System.out.println("-" + empleados.get(key).getNombre() + " " + empleados.get(key).getApellido());
+                System.out.println("- " + key + " " + empleados.get(key).getNombre() + " " + empleados.get(key).getApellido() + '\n');
             }
         }
     }
