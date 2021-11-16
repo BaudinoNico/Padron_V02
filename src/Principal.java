@@ -41,7 +41,10 @@ public class Principal {
 
                     opcion = in.nextInt();
                     System.out.println("Seleccionaste la opción " + opcion);
-
+                } catch (Exception e) {
+                    System.out.println("La opcion debe ser un numero entero. Intente nuevamente" + '\n');
+                    in.nextLine();
+                }
 
                     switch (opcion) {
                         case 1:
@@ -51,6 +54,8 @@ public class Principal {
                             Eliminar();
                             break;
                         case 3:
+                            /*Modificar();
+                            break;*/
                         case 4:
                             Mostrar();
                             break;
@@ -69,10 +74,7 @@ public class Principal {
                             System.out.println("Opcion invalida, intente nuevamente" + '\n');
                             break;
                     }
-                } catch (Exception e) {
-                    System.out.println("La opcion debe ser un numero entero. Intente nuevamente" + '\n');
-                    in.nextLine();
-                }
+
             }
     }
 
@@ -86,105 +88,124 @@ public class Principal {
         banderacre = true;
 
         while (banderacre){
-            banderacre = false;
-            System.out.println("Ingrese 1 para Docente o 2 para Administrativo y presione enter");
-            tipor = in.nextInt();
-            switch (tipor) {
-                case 1:
-                    nombre_ins = "Doc" + idoc;
-                    System.out.println("Ingrese DNI");
-                    dni = in.nextInt();
+            try {
+                banderacre = false;
+                System.out.println("Ingrese 1 para Docente, 2 para Administrativo, 3 para volver al menu principal y presione enter");
+                tipor = in.nextInt();
+                switch (tipor) {
+                    case 1:
+                        nombre_ins = "Doc" + idoc;
+                        System.out.println("Ingrese DNI");
+                        dni = in.nextInt();
+                        in.nextLine();
+                        System.out.println("Ingrese nombre");
+                        nom = in.nextLine();
+                        System.out.println("Ingrese apellido");
+                        ape = in.nextLine();
+                        System.out.println("Ingrese dirección");
+                        dir = in.nextLine();
+                        System.out.println("Ingrese institución");
+                        ins = in.nextLine();
+                        System.out.println("Ingrese título");
+                        tit = in.nextLine();
+                        System.out.println("Ingrese materia");
+                        mat = in.nextLine();
+                        System.out.println("Ingrese cant de horas semanales");
+                        hor = in.nextDouble();
+                        System.out.println("Ingrese valor por hora");
+                        cos = in.nextDouble();
+                        empleados.put(nombre_ins, new Docente(dni, nom, ape, dir, ins, tit, mat, hor, cos));
+                        System.out.println("Usted ha creado la siguiente entrada " + '\n' + "Codigo unico:" + nombre_ins + '\n' + empleados.get(nombre_ins).toString());
+                        idoc++;
+                        break;
+                    case 2:
+                        nombre_ins = "Adm" + iadm;
+                        System.out.println("Ingrese DNI");
+                        dni = in.nextInt();
+                        in.nextLine();
+                        System.out.println("Ingrese nombre");
+                        nom = in.nextLine();
+                        System.out.println("Ingrese apellido");
+                        ape = in.nextLine();
+                        System.out.println("Ingrese dirección");
+                        dir = in.nextLine();
+                        System.out.println("Ingrese institución");
+                        ins = in.nextLine();
+                        System.out.println("Ingrese area");
+                        are = in.nextLine();
+                        System.out.println("Ingrese salario");
+                        sal = in.nextDouble();
+                        empleados.put(nombre_ins, new Administrativo(dni, nom, ape, dir, ins, are, sal));
+                        System.out.println("Usted ha creado la siguiente entrada " + '\n' + "Codigo unico:" + nombre_ins + '\n' + empleados.get(nombre_ins).toString());
+                        iadm++;
+                        break;
+                    case 3:
+                        System.out.println("Volviendo al menu principal" + '\n');
+                        break;
+                    default:
+                        System.out.println("Opcion invalida. Intente nuevamente");
+                        banderacre = true;
+                }
+            } catch (Exception e) {
+                    System.out.println("Debe ingresar un valor numerico. Intente nuevamente" + '\n');
                     in.nextLine();
-                    System.out.println("Ingrese nombre");
-                    nom = in.nextLine();
-                    System.out.println("Ingrese apellido");
-                    ape = in.nextLine();
-                    System.out.println("Ingrese dirección");
-                    dir = in.nextLine();
-                    System.out.println("Ingrese institución");
-                    ins = in.nextLine();
-                    System.out.println("Ingrese título");
-                    tit = in.nextLine();
-                    System.out.println("Ingrese materia");
-                    mat = in.nextLine();
-                    System.out.println("Ingrese cant de horas semanales");
-                    hor = in.nextDouble();
-                    System.out.println("Ingrese valor por hora");
-                    cos = in.nextDouble();
-                    empleados.put(nombre_ins, new Docente(dni, nom, ape, dir, ins, tit, mat, hor, cos));
-                    System.out.println("Usted ha creado la siguiente entrada " + '\n' + "Codigo unico:" + nombre_ins + '\n' + empleados.get(nombre_ins).toString());
-                    idoc++;
-                    break;
-                case 2:
-                    nombre_ins = "Adm" + iadm;
-                    System.out.println("Ingrese DNI");
-                    dni = in.nextInt();
-                    in.nextLine();
-                    System.out.println("Ingrese nombre");
-                    nom = in.nextLine();
-                    System.out.println("Ingrese apellido");
-                    ape = in.nextLine();
-                    System.out.println("Ingrese dirección");
-                    dir = in.nextLine();
-                    System.out.println("Ingrese institución");
-                    ins = in.nextLine();
-                    System.out.println("Ingrese area");
-                    are = in.nextLine();
-                    System.out.println("Ingrese salario");
-                    sal = in.nextDouble();
-                    empleados.put(nombre_ins, new Administrativo(dni, nom, ape, dir, ins, are, sal));
-                    System.out.println("Usted ha creado la siguiente entrada " + '\n' + "Codigo unico:" + nombre_ins + '\n' + empleados.get(nombre_ins).toString());
-                    iadm++;
-                    break;
-                default:
-                    System.out.println("Opcion invalida");
                     banderacre = true;
             }
         }
     }
 
+
     public static void Eliminar() {
-        String parambusq, confirm, dni2;
+        String parambusq, confirm, dnitxt;
         int dni;
+        boolean bandera;
+
+        bandera = true;
 
         System.out.println("Ingrese Codigo Unico o DNI para eliminar un registro");
-            in.nextLine();
-            parambusq = in.nextLine();
-                    for(Object key : empleados.keySet()) {
-                        if (key.equals(parambusq)) {
-                            System.out.println("Esta seguro que desea eliminar a " + empleados.get(parambusq).getNombre() + " " + empleados.get(parambusq).getApellido() + "?");
-                            System.out.println("y / N");
-                            confirm = in.nextLine();
-                            if (confirm.equals("y")) {
-                                empleados.remove(parambusq);
-                                System.out.println("El registro ha sido eliminado");
-                                break;
-                            }
-                            else {
-                                System.out.println("Operacion cancelada");
-                                break;
-                            }
-                        }
-                    }
-                    for (Object key : empleados.keySet()) {
-                        dni2 = String.valueOf(empleados.get(key).getDni());
-                        if (parambusq.equals(dni2)) {
-                                System.out.println("Esta seguro que desea eliminar a " + empleados.get(key).getNombre() + empleados.get(key).getApellido() + "?");
-                                System.out.println("y / N");
-                                confirm = in.nextLine();
-                                if (confirm.equals("y")) {
-                                    empleados.remove(key);
-                                    System.out.println("El registro ha sido eliminado");
-                                    break;
-                                }
-                                else {
-                                    System.out.println("Operacion cancelada");
-                                    break;
-                                }
-                            }
-
-                    }
-
+        in.nextLine();
+        parambusq = in.nextLine();
+        for(Object key : empleados.keySet()) {
+            if (key.equals(parambusq)) {
+                System.out.println("Esta seguro que desea eliminar a " + empleados.get(parambusq).getNombre() + " " + empleados.get(parambusq).getApellido() + "?");
+                System.out.println("y / N");
+                confirm = in.nextLine();
+                if (confirm.equals("y")) {
+                    empleados.remove(parambusq);
+                    System.out.println("El registro ha sido eliminado");
+                    bandera =false;
+                    break;
+                }
+                else {
+                    System.out.println("Operacion cancelada");
+                    bandera =false;
+                    break;
+                }
+            }
+        }
+        for (Object key : empleados.keySet()) {
+            dnitxt = String.valueOf(empleados.get(key).getDni());
+            if (parambusq.equals(dnitxt)) {
+                System.out.println("Esta seguro que desea eliminar a " + empleados.get(key).getNombre() + empleados.get(key).getApellido() + "?");
+                System.out.println("y / N");
+                confirm = in.nextLine();
+                if (confirm.equals("y")) {
+                    empleados.remove(key);
+                    System.out.println("El registro ha sido eliminado");
+                    bandera =false;
+                    break;
+                }
+                else {
+                    System.out.println("Operacion cancelada");
+                    bandera =false;
+                    break;
+                }
+            }
+        }
+        if (bandera) {
+            System.out.println('\n' + "No se ha encontrado el registro -" + parambusq + "-");
+            System.out.println("Volviendo al menu principal" + '\n');
+        }
     }
 
     //Muestra Administrativos
@@ -221,4 +242,12 @@ public class Principal {
         System.out.println(empleados.get(coduni).toString());
     }
 
+    /*public static  void Modificar() {
+        int dninuevo;
+        System.out.println("Inserte nuevo dato");
+        dninuevo = in.nextInt();
+        empleados.get("Adm0").setDni(dninuevo);
+        System.out.println("El nuevo dni es" + empleados.get("Adm0").getDni());
+
+    }*/
 }
