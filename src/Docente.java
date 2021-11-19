@@ -45,9 +45,18 @@ public class Docente extends Empleado {
     @Override
     public String toString() {
         return super.toString() +
-                "titulo='" + titulo + '\n' +
-                "materia='" + materia + '\n' +
-                "horas=" + horas + '\n' +
-                "costoh=" + costoH + '\n';
+                "- Titulo = " + titulo + '\n' +
+                "- Materia = " + materia + '\n' +
+                "- Horas Semanales = " + horas + '\n' +
+                "- Monto por Hora = " + costoH + '\n';
+    }
+
+    @Override
+    public String campos() {
+        return  super.campos() +
+                "6- Titulo\n" +
+                "7- Materia\n" +
+                "8- Horas\n" +
+                "9- Monto por Hora\n";
     }
 }

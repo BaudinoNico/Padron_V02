@@ -1,6 +1,6 @@
-public abstract class Empleado {
+public abstract class Empleado{
     private int dni;
-    private String nombre,apellido,direccion,institucion,puesto;
+    private String nombre,apellido,direccion,institucion;
 
     public Empleado(int dni, String nombre, String apellido, String direccion, String institucion) {
         this.dni = dni;
@@ -52,10 +52,18 @@ public abstract class Empleado {
 
     @Override
     public String toString() {
-        return  "dni=" + dni + '\n' +
-                "nombre='" + nombre + '\n' +
-                "apellido='" + apellido + '\n' +
-                "direccion='" + direccion + '\n' +
-                "institucion='" + institucion + '\n';
+        return  "- DNI = " + dni + '\n' +
+                "- Nombre = " + nombre + '\n' +
+                "- Apellido = " + apellido + '\n' +
+                "- Direccion = " + direccion + '\n' +
+                "- Institucion = " + institucion + '\n';
+    }
+
+    public String campos() {
+        return  "1- Dni\n" +
+                "2- Nombre\n" +
+                "3- Apellido\n" +
+                "4- Direccion\n" +
+                "5- Institucion\n";
     }
 }

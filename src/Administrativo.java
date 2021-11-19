@@ -27,7 +27,14 @@ public class Administrativo extends Empleado {
     @Override
     public String toString() {
         return super.toString() +
-                "area='" + area + '\n' +
-                "salario=" + salario + '\n';
+                "- Area = " + area + '\n' +
+                "- Salario = " + salario + '\n';
+    }
+
+    @Override
+    public String campos() {
+        return  super.campos() +
+                "6- Area\n" +
+                "7- Salario\n";
     }
 }
