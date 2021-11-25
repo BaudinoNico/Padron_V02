@@ -4,25 +4,24 @@ import java.time.LocalDateTime;
 
 public class Principal {
     private static int idoc=0, iadm=0;
-    private static Map<String,Docente> Docentes = new TreeMap<String,Docente>();
-    private static Map<String,Administrativo> Administrativos = new TreeMap<String, Administrativo>();
+    private static Map<String,Empleado> Empleados = new TreeMap<String,Empleado>();
     private static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
-        int opcion = 0;
+        int opcion = 0, salida = 9;
 
         //Empleados para probar funcionalidad
-        Docentes.put("Doce0", new Docente(33069335, "Nico", "Bau", "Esp 1960", "Poli", "Arq", "Dib", 8, 650));
-        Docentes.put("Doce1", new Docente(33562331, "Gime", "Can", "Esp 1916", "Lat", "Arq", "Const", 16, 800));
-        Administrativos.put("Adm0", new Administrativo(12621880, "Cata", "Soto", "Rio 333", "Lat", "Cobr", 70000));
+        Empleados.put("Doce0", new Docente(33069335, "Nico", "Bau", "Esp 1960", "Poli", "Arq", "Dib", 8, 650));
+        Empleados.put("Doce1", new Docente(33562331, "Gime", "Can", "Esp 1916", "Lat", "Arq", "Const", 16, 800));
+        Empleados.put("Adm0", new Administrativo(12621880, "Cata", "Soto", "Rio 333", "Lat", "Cobr", 70000));
         //Empleados para probar funcionalidad
 
         DateTimeFormatter dia = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter hora = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalDateTime ahora = LocalDateTime.now();
-        System.out.println("\nBienvenido al Sistema de Padron de Empleados!\nHoy es " + dia.format(ahora) + " y son las " + hora.format(ahora) + '\n');
+        LocalDateTime login = LocalDateTime.now();
+        System.out.println("\nBienvenido al Sistema de Padron de Empleados!\nHoy es " + dia.format(login) + " y son las " + hora.format(login) + '\n');
 
-        while (opcion != 9) {
+        while (opcion != salida) {
             try {
                 System.out.println("Que desea hacer?\nIngrese una opción y luego presione enter:");
                 System.out.println(
@@ -38,6 +37,8 @@ public class Principal {
                         ">");
 
                 opcion = in.nextInt();
+                in.nextLine(); //Consume el fin de linea que no consume el nextInt.
+
                 System.out.println("\n<Seleccionaste la opción " + opcion+">");
 
                 switch (opcion) {
@@ -91,6 +92,8 @@ public class Principal {
             banderacre = false;
             System.out.println("\n----------\nIngrese 1 para Docente o 2 para Administrativo y presione enter:\n>");
             tipor = in.nextInt();
+            in.nextLine(); //Consume el fin de linea que no consume el nextInt.
+
             switch (tipor) {
                 case 1:
                     nombre_ins = "Doc" + idoc;
@@ -113,8 +116,8 @@ public class Principal {
                     hor = in.nextDouble();
                     System.out.println("- Ingrese el valor por hora...");
                     cos = in.nextDouble();
-                    Docentes.put(nombre_ins, new Docente(dni, nom, ape, dir, ins, tit, mat, hor, cos));
-                    System.out.println("\n----------\nUsted ha creado la siguiente entrada:\nCodigo unico: " + nombre_ins + '\n' + Docentes.get(nombre_ins).toString());
+                    Empleados.put(nombre_ins, new Docente(dni, nom, ape, dir, ins, tit, mat, hor, cos));
+                    System.out.println("\n----------\nUsted ha creado la siguiente entrada:\nCodigo unico: " + nombre_ins + '\n' + Empleados.get(nombre_ins).toString());
                     System.out.println("\nPresione una tecla para continuar....");
                     in.nextLine();
                     idoc++;
@@ -136,8 +139,8 @@ public class Principal {
                     are = in.nextLine();
                     System.out.println("- Ingrese el salario...");
                     sal = in.nextDouble();
-                    Administrativos.put(nombre_ins, new Administrativo(dni, nom, ape, dir, ins, are, sal));
-                    System.out.println("\n----------\nUsted ha creado la siguiente entrada:\nCodigo unico: " + nombre_ins + '\n' + Administrativos.get(nombre_ins).toString());
+                    Empleados.put(nombre_ins, new Administrativo(dni, nom, ape, dir, ins, are, sal));
+                    System.out.println("\n----------\nUsted ha creado la siguiente entrada:\nCodigo unico: " + nombre_ins + '\n' + Empleados.get(nombre_ins).toString());
                     iadm++;
                     break;
                 default:
@@ -148,70 +151,25 @@ public class Principal {
     }
 
     public static void Eliminar() {
-        String parambusq;
+        String parambusq, cubusq;
         int dnibusq;
 
         System.out.println("\n---------\nIngrese Codigo Unico o DNI para eliminar un registro:\n>");
         in.nextLine();
         parambusq = in.nextLine();
 
-        if (esDNI(parambusq)){
+        if (esDNI(parambusq)) {
             dnibusq = Integer.parseInt(parambusq);
-            if(Elim_Busq_DocDNI(Docentes,dnibusq)){
-                System.out.println("\n<<El registro ha sido eliminado>>");
+            cubusq = DNIaCU(dnibusq);
+
+            if (cubusq != null) {
+                EliminarCU(cubusq);
             }
-            else if (Elim_Busq_AdmDNI(Administrativos,dnibusq)){
-                System.out.println("\n<<El registro ha sido eliminado>>");
-            }
-            else {
-                System.out.println("\n<<No se encontro ningun registro>>");
-            }
-        }
-        else if (Elim_Busq_DocCU(Docentes,parambusq)){
-            System.out.println("\n<<El registro ha sido eliminado>>");
-        }
-        else if (Elim_Busq_AdmCU(Administrativos,parambusq)) {
-            System.out.println("\n<<El registro ha sido eliminado>>\n---------\n");
         }
         else {
-            System.out.println("\n<<No se encontro ningun registro>>");
+            EliminarCU(parambusq);
         }
     }
-
-        /* ESTE ES EL METODO DE BUSQUEDA LOOPEANDO PARA CU y DNI, SOLO EN DOCENTES
-        for(Object key : Docentes.keySet()) {
-            if (key.equals(parambusq)) {
-                System.out.println("Esta seguro que desea eliminar a " + Docentes.get(parambusq).getNombre() + " " + Docentes.get(parambusq).getApellido() + "?");
-                System.out.println("S / N");
-                confirm = in.nextLine();
-                if (confirm.equals("S")) {
-                    Docentes.remove(parambusq);
-                    System.out.println("\n<<El registro ha sido eliminado>>");
-                    break;
-                }
-                else {
-                    System.out.println("<<Operacion cancelada>>");
-                    break;
-                }
-            }
-        }
-        for (Object key : Docentes.keySet()) {
-            dni2 = String.valueOf(Docentes.get(key).getDni());
-            if (parambusq.equals(dni2)) {
-                    System.out.println("Esta seguro que desea eliminar a " + Docentes.get(key).getNombre() + Docentes.get(key).getApellido() + "?");
-                    System.out.println("y / N");
-                    confirm = in.nextLine();
-                    if (confirm.equals("y")) {
-                        Docentes.remove(key);
-                        System.out.println("El registro ha sido eliminado");
-                        break;
-                    }
-                    else {
-                        System.out.println("Operacion cancelada");
-                        break;
-                    }
-                }
-         */
 
     //Evalua si el ingreso para la busqueda de eliminacion es CU o DNI
     public static boolean esDNI(String ingreso) {
@@ -226,84 +184,37 @@ public class Principal {
         return true;
     }
 
-    //Busca a quien eliminar en Docente segun el DNI
-    public static boolean Elim_Busq_DocDNI (Map<String,Docente> mapa, int param) {
-        String confirm;
-        for(Object key : mapa.keySet()) {
-            if (param == mapa.get(key).getDni()) {
-                System.out.println("Esta seguro que desea eliminar a " + mapa.get(key).getNombre() + " " + mapa.get(key).getApellido() + "?");
-                System.out.println("S / N");
-                confirm = in.nextLine();
-                if (confirm.equals("S")) {
-                    Docentes.remove(key);
-                    return true;
-                }
-                else {
-                    System.out.println("<<Operacion cancelada>>");
-                    return false;
-                }
+    //Busca cual es el CU segun el DNI
+    public static String DNIaCU (int param) {
+        for(String key : Empleados.keySet()) {
+            if (param == Empleados.get(key).getDni()) {
+                return key;
             }
         }
-        return false;
+        System.out.println("<<No se encontraron registros con ese DNI>>");
+        return null;
     }
 
-    //Busca a quien eliminar en Administrativos segun el DNI
-    public static boolean Elim_Busq_AdmDNI (Map<String,Administrativo> mapa, int param) {
+    //Busca Eliminiar al registro segun el CU
+    public static void EliminarCU (String cu) {
         String confirm;
-        for(Object key : mapa.keySet()) {
-            if (param == mapa.get(key).getDni()) {
-                System.out.println("Esta seguro que desea eliminar a " + mapa.get(key).getNombre() + " " + mapa.get(key).getApellido() + "?");
-                System.out.println("S / N");
-                confirm = in.nextLine();
-                if (confirm.equals("S")) {
-                    Administrativos.remove(key);
-                    return true;
-                }
-                else {
-                    System.out.println("<<Operacion cancelada>>");
-                    return false;
-                }
-            }
-        }
-        return false;
-    }
 
-    // Busca a quien eliminar en Docentes segun el Codigo Unico
-    public static boolean Elim_Busq_DocCU (Map<String,Docente> mapa, String param) {
-        String confirm;
-        if (mapa.containsKey(param)) {
-            System.out.println("Esta seguro que desea eliminar a " + mapa.get(param).getNombre() + " " + mapa.get(param).getApellido() + "?");
+        if (Empleados.containsKey(cu)) {
+            System.out.println("Esta seguro que desea eliminar a " + Empleados.get(cu).getNombre() + " " + Empleados.get(cu).getApellido() + "?");
             System.out.println("S / N");
             confirm = in.nextLine();
+
             if (confirm.equals("S")) {
-                Docentes.remove(param);
-                return true;
+                Empleados.remove(cu);
+                System.out.println("<<Empleado eliminado con exito>>");
             }
             else {
                 System.out.println("<<Operacion cancelada>>");
-                return false;
             }
         }
-        return false;
-    }
-
-    // Busca a quien eliminar en Administrativos segun el Codigo Unico
-    public static boolean Elim_Busq_AdmCU (Map<String,Administrativo> mapa, String param) {
-        String confirm;
-        if (mapa.containsKey(param)) {
-            System.out.println("Esta seguro que desea eliminar a " + mapa.get(param).getNombre() + " " + mapa.get(param).getApellido() + "?");
-            System.out.println("S / N");
-            confirm = in.nextLine();
-            if (confirm.equals("S")) {
-                Administrativos.remove(param);
-                return true;
-            }
-            else {
-                System.out.println("<<Operacion cancelada>>");
-                return false;
-            }
+        else {
+            System.out.println("<<No se encontraron registros con ese CU>>");
         }
-        return false;
     }
 
     //Modifica datos segun CU o DNI
@@ -315,132 +226,107 @@ public class Principal {
         in.nextLine();
         parambusq = in.nextLine();
 
-        if (Docentes.containsKey(parambusq)) {
-            System.out.println("\nRegistro encontrado, se muestran los datos correspondientes:" + Docentes.get(parambusq).toString());
+        if (Empleados.containsKey(parambusq)) {
+            System.out.println("\nRegistro encontrado, se muestran los datos correspondientes:" + Empleados.get(parambusq).toString());
             System.out.println("\nPresione una tecla para continuar....");
             in.nextLine();
-            EditarDocentes(parambusq);
-        } else if (Administrativos.containsKey(parambusq)) {
-            System.out.println("\nRegistro encontrado, se muestran los datos correspondientes:" + Administrativos.get(parambusq).toString());
-            EditarAdministrativos(parambusq);
+            ModificarCU(parambusq);
         } else {
             System.out.println("\n<<No se encontro ningun registro asociado a ese Codigo Unico>>\n");
         }
     }
 
-    public static void EditarDocentes(String param) {
-        int c=0;
-        while (c!=10) {
-            System.out.println("\nIngrese el numero de campo a editar:\n" + Docentes.get(param).campos() + "10- Finalizar edicion\n");
-            c = in.nextInt();
-            in.nextLine();
-            switch (c) {
-                case 1: {
-                    System.out.println("\nEl DNI actual es <" + Docentes.get(param).getDni() + ">, ingrese el nuevo DNI:\n>");
-                    Docentes.get(param).setDni(in.nextInt());
-                    in.nextLine();
-                    break;
-                }
-                case 2: {
-                    System.out.println("\nEl Nombre actual es <" + Docentes.get(param).getNombre() + ">, ingrese el nuevo Nombre:\n>");
-                    Docentes.get(param).setNombre(in.nextLine());
-                    break;
-                }
-                case 3: {
-                    System.out.println("\nEl Apellido actual es <" + Docentes.get(param).getApellido() + ">, ingrese el nuevo Apellido:\n>");
-                    Docentes.get(param).setApellido(in.nextLine());
-                    break;
-                }
-                case 4: {
-                    System.out.println("\nLa Direccion actual es <" + Docentes.get(param).getDireccion() + ">, ingrese la nueva Direccion:\n>");
-                    Docentes.get(param).setDireccion(in.nextLine());
-                    break;
-                }
-                case 5: {
-                    System.out.println("\nLa Institucion actual es <" + Docentes.get(param).getInstitucion() + ">, ingrese la nueva Institucion:\n>");
-                    Docentes.get(param).setInstitucion(in.nextLine());
-                    break;
-                }
-                case 6: {
-                    System.out.println("\nEl Titulo actual es <" + Docentes.get(param).getTitulo() + ">, ingrese el nuevo Titulo:\n>");
-                    Docentes.get(param).setTitulo(in.nextLine());
-                    break;
-                }
-                case 7: {
-                    System.out.println("\nLa Materia actual es <" + Docentes.get(param).getMateria() + ">, ingrese la nueva Materia:\n>");
-                    Docentes.get(param).setMateria(in.nextLine());
-                    break;
-                }
-                case 8: {
-                    System.out.println("\nLa Cantidad de Horas Semanales actual es <" + Docentes.get(param).getHoras() + ">, ingrese la nueva cantidad:\n>");
-                    Docentes.get(param).setHoras(in.nextDouble());
-                    break;
-                }
-                case 9: {
-                    System.out.println("\nEl Monto por Hora actual es <" + Docentes.get(param).getCostoH() + ">, ingrese el nuevo monto:\n>");
-                    Docentes.get(param).setCostoh(in.nextDouble());
-                    break;
-                }
-                case 10: {
-                    System.out.println("\n<<Edicion finalizada>>\n");
-                    break;
-                }
-                default: {
-                    System.out.println("\nOpcion incorrecta, vuelva a intentarlo");
-                }
-            }
-        }
-    }
+    public static void ModificarCU (String param) {
+        int c=0, salida=10;
+        while (c != salida) {
 
-    public static void EditarAdministrativos(String param) {
-        int c=0;
-        while (c!=8) {
-            System.out.println("\nIngrese el numero de campo a editar:\n" + Administrativos.get(param).campos() + "8- Finalizar edicion\n");
+            System.out.println("\nIngrese el numero de campo a editar:\n" + Empleados.get(param).campos() + "0- Finalizar edicion\n");
             c = in.nextInt();
-            in.nextLine();
+            in.nextLine(); //Consume el salto de linea que no consume el nextInt
+
             switch (c) {
                 case 1: {
-                    System.out.println("\nEl DNI actual es <" + Administrativos.get(param).getDni() + ">, ingrese el nuevo DNI:\n>");
-                    Administrativos.get(param).setDni(in.nextInt());
+                    System.out.println("\nEl DNI actual es <" + Empleados.get(param).getDni() + ">, ingrese el nuevo DNI:\n>");
+                    Empleados.get(param).setDni(in.nextInt());
                     in.nextLine();
                     break;
                 }
                 case 2: {
-                    System.out.println("\nEl Nombre actual es <" + Administrativos.get(param).getNombre() + ">, ingrese el nuevo Nombre:\n>");
-                    Administrativos.get(param).setNombre(in.nextLine());
+                    System.out.println("\nEl Nombre actual es <" + Empleados.get(param).getNombre() + ">, ingrese el nuevo Nombre:\n>");
+                    Empleados.get(param).setNombre(in.nextLine());
                     break;
                 }
                 case 3: {
-                    System.out.println("\nEl Apellido actual es <" + Administrativos.get(param).getApellido() + ">, ingrese el nuevo Apellido:\n>");
-                    Administrativos.get(param).setApellido(in.nextLine());
+                    System.out.println("\nEl Apellido actual es <" + Empleados.get(param).getApellido() + ">, ingrese el nuevo Apellido:\n>");
+                    Empleados.get(param).setApellido(in.nextLine());
                     break;
                 }
                 case 4: {
-                    System.out.println("\nLa Direccion actual es <" + Administrativos.get(param).getDireccion() + ">, ingrese la nueva Direccion:\n>");
-                    Administrativos.get(param).setDireccion(in.nextLine());
+                    System.out.println("\nLa Direccion actual es <" + Empleados.get(param).getDireccion() + ">, ingrese la nueva Direccion:\n>");
+                    Empleados.get(param).setDireccion(in.nextLine());
                     break;
                 }
                 case 5: {
-                    System.out.println("\nLa Institucion actual es <" + Administrativos.get(param).getInstitucion() + ">, ingrese la nueva Institucion:\n>");
-                    Administrativos.get(param).setInstitucion(in.nextLine());
+                    System.out.println("\nLa Institucion actual es <" + Empleados.get(param).getInstitucion() + ">, ingrese la nueva Institucion:\n>");
+                    Empleados.get(param).setInstitucion(in.nextLine());
                     break;
                 }
-                case 6: {
-                    System.out.println("\nEl Area actual es <" + Administrativos.get(param).getArea() + ">, ingrese el nuevo Area:\n>");
-                    Administrativos.get(param).setArea(in.nextLine());
-                    break;
-                }
-                case 7: {
-                    System.out.println("\nEl Salario actual es <" + Administrativos.get(param).getSalario() + ">, ingrese el nuevo Salario:\n>");
-                    Administrativos.get(param).setSalario(in.nextDouble());
-                    break;
-                }
-                case 8: {
+                case 0: {
                     System.out.println("\n<<Edicion finalizada>>\n");
                     break;
                 }
-                default: {
-                    System.out.println("\nOpcion incorrecta, vuelva a intentarlo");
+                default:
+            }
+
+            if (Empleados.get(param) instanceof Docente) {
+                switch (c) {
+                    case 6: {
+                        System.out.println("\nEl Titulo actual es <" + ((Docente) Empleados.get(param)).getTitulo() + ">, ingrese el nuevo Titulo:\n>");
+                        ((Docente) Empleados.get(param)).setTitulo(in.nextLine());
+                        break;
+                    }
+                    case 7: {
+                        System.out.println("\nLa Materia actual es <" + ((Docente) Empleados.get(param)).getMateria() + ">, ingrese la nueva Materia:\n>");
+                        ((Docente) Empleados.get(param)).setMateria(in.nextLine());
+                        break;
+                    }
+                    case 8: {
+                        System.out.println("\nLa Cantidad de Horas Semanales actual es <" + ((Docente) Empleados.get(param)).getHoras() + ">, ingrese la nueva cantidad:\n>");
+                        ((Docente) Empleados.get(param)).setHoras(in.nextDouble());
+                        break;
+                    }
+                    case 9: {
+                        System.out.println("\nEl Monto por Hora actual es <" + ((Docente) Empleados.get(param)).getCostoH() + ">, ingrese el nuevo monto:\n>");
+                        ((Docente) Empleados.get(param)).setCostoh(in.nextDouble());
+                        break;
+                    }
+                    case 10: {
+                        System.out.println("\n<<Edicion finalizada>>\n");
+                        break;
+                    }
+                    default: {
+                        System.out.println("\nOpcion incorrecta, vuelva a intentarlo");
+                    }
+                }
+            } else if (Empleados.get(param) instanceof Administrativo) {
+                switch (c) {
+                    case 6: {
+                        System.out.println("\nEl Area actual es <" + ((Administrativo) Empleados.get(param)).getArea() + ">, ingrese el nuevo Area:\n>");
+                        ((Administrativo) Empleados.get(param)).setArea(in.nextLine());
+                        break;
+                    }
+                    case 7: {
+                        System.out.println("\nEl Salario actual es <" + ((Administrativo) Empleados.get(param)).getSalario() + ">, ingrese el nuevo Salario:\n>");
+                        ((Administrativo) Empleados.get(param)).setSalario(in.nextDouble());
+                        break;
+                    }
+                    case 10: {
+                        System.out.println("\n<<Edicion finalizada>>\n");
+                        break;
+                    }
+                    default: {
+                        System.out.println("\nOpcion incorrecta, vuelva a intentarlo");
+                    }
                 }
             }
         }
@@ -448,16 +334,12 @@ public class Principal {
 
     //Muestra datos desde codigo unico
     public static void Mostrar() {
-        String coduni;
+        String cu;
 
         System.out.println("\n----------\nIngrese Codigo Unico para visualizar informacion:\n>");
-        in.nextLine();
-        coduni = in.nextLine();
-        if (Docentes.containsKey(coduni)) {
-            System.out.println("\nEmpleado encontrado:\n> " + Docentes.get(coduni).toString());
-        }
-        else if (Administrativos.containsKey(coduni)) {
-            System.out.println("\nEmpleado encontrado:\n> " + Administrativos.get(coduni).toString());
+        cu = in.nextLine();
+        if (Empleados.containsKey(cu)) {
+            System.out.println("\nEmpleado encontrado:\n> " + Empleados.get(cu).toString());
         }
         else {
             System.out.println("\n<<No se encontro ningun empleado con ese codigo>>\n");
@@ -469,8 +351,10 @@ public class Principal {
     //Muestra Administrativos
     public static void ListAdm() {
         System.out.println("\n----------\nLos empleados administrativos son:\n");
-        for(Object key : Administrativos.keySet()) {
-            System.out.println(Administrativos.get(key).toString() + "\n----------\n");
+        for(Object key : Empleados.keySet()) {
+            if (Empleados.get(key) instanceof Administrativo) {
+                System.out.println(Empleados.get(key).toString() + "\n----------\n");
+            }
         }
         System.out.println("Presione una tecla para continuar....");
         in.nextLine();
@@ -479,8 +363,10 @@ public class Principal {
     //Muestra Docentes
     public static void ListDoc() {
         System.out.println("\n----------\nLos empleados docentes son:\n");
-        for(Object key : Docentes.keySet()) {
-            System.out.println(Docentes.get(key).toString() + "\n----------\n");
+        for(Object key : Empleados.keySet()) {
+            if (Empleados.get(key) instanceof Docente) {
+                System.out.println(Empleados.get(key).toString() + "\n----------\n");
+            }
         }
         System.out.println("Presione una tecla para continuar....");
         in.nextLine();
@@ -491,13 +377,15 @@ public class Principal {
         double max = 0;
         String key_max = "";
 
-        for (String key : Administrativos.keySet()) {
-            if (max < Administrativos.get(key).getSalario()) {
-                max = Administrativos.get(key).getSalario();
-                key_max = key;
+        for(String key : Empleados.keySet()) {
+            if (Empleados.get(key) instanceof Administrativo) {
+                if (max < ((Administrativo) Empleados.get(key)).getSalario()) {
+                    max = ((Administrativo) Empleados.get(key)).getSalario();
+                    key_max = key;
+                }
             }
         }
-        System.out.println("\nEl Administrativo de mayor sueldo es: \n" + Administrativos.get(key_max).toString()+"\n");
+        System.out.println("\nEl Administrativo de mayor sueldo es: \n" + Empleados.get(key_max).toString()+"\n");
         System.out.println("Presione una tecla para continuar....");
         in.nextLine();
     }
@@ -505,22 +393,23 @@ public class Principal {
     //Muestra Docentes segun materia
     public static void ListDocMateria() {
         String mat;
-        Boolean control = false;
+        boolean control = false;
 
         System.out.println("Ingrese la Materia por la que quiere consultar:\n>");
-        in.nextLine();
         mat = in.nextLine();
 
         System.out.println("\n----------\nLos Docentes en la materia " + mat + " son:\n");
 
-        for(Object key : Docentes.keySet()) {
-            if (mat == Docentes.get(key).getMateria()) {
-                System.out.println(Docentes.get(key).toString() + "\n----------\n");
-                control = true;
+        for(String key : Empleados.keySet()) {
+            if (Empleados.get(key) instanceof Docente) {
+                if (Objects.equals(mat, ((Docente) Empleados.get(key)).getMateria())) {
+                    System.out.println(Empleados.get(key).toString() + "\n----------\n");
+                    control = true;
+                }
             }
         }
-        if (control == false) {
-            System.out.println("<<No se encontraron Docentes asociados a la materia " + mat + ">>");
+        if (!control) {
+            System.out.println("<<No se encontraron Docentes asociados a la materia " + mat + ">>\n");
             System.out.println("Presione una tecla para continuar....");
             in.nextLine();
         }
