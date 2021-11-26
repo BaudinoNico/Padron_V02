@@ -60,7 +60,7 @@ public abstract class Empleado{
     }
 
     public String campos() {
-        return  "1- Dni\n" +
+        return  "1- DNI\n" +
                 "2- Nombre\n" +
                 "3- Apellido\n" +
                 "4- Direccion\n" +

@@ -23,6 +23,7 @@ public class Principal {
 
         while (opcion != salida) {
             try {
+                System.out.println("<Se encuentra(n) registrados <" + Empleados.size() + "> empleado(s) en el padron>");
                 System.out.println("Que desea hacer?\nIngrese una opción y luego presione enter:");
                 System.out.println(
                         "1. Registrar empleado\n" +
@@ -89,63 +90,71 @@ public class Principal {
         banderacre = true;
 
         while (banderacre){
-            banderacre = false;
-            System.out.println("\n----------\nIngrese 1 para Docente o 2 para Administrativo y presione enter:\n>");
-            tipor = in.nextInt();
-            in.nextLine(); //Consume el fin de linea que no consume el nextInt.
+            try {
+                banderacre = false;
+                System.out.println("\n----------\nIngrese 1 para Docente o 2 para Administrativo y presione enter:\n>");
+                tipor = in.nextInt();
+                in.nextLine(); //Consume el fin de linea que no consume el nextInt.
 
-            switch (tipor) {
-                case 1:
-                    nombre_ins = "Doc" + idoc;
-                    System.out.println("\n----------\n- Ingrese el DNI...");
-                    dni = in.nextInt();
-                    in.nextLine();
-                    System.out.println("- Ingrese el nombre...");
-                    nom = in.nextLine();
-                    System.out.println("- Ingrese el apellido...");
-                    ape = in.nextLine();
-                    System.out.println("- Ingrese la dirección...");
-                    dir = in.nextLine();
-                    System.out.println("- Ingrese la institución...");
-                    ins = in.nextLine();
-                    System.out.println("- Ingrese el título...");
-                    tit = in.nextLine();
-                    System.out.println("- Ingrese la materia...");
-                    mat = in.nextLine();
-                    System.out.println("- Ingrese la cantidad de horas semanales...");
-                    hor = in.nextDouble();
-                    System.out.println("- Ingrese el valor por hora...");
-                    cos = in.nextDouble();
-                    Empleados.put(nombre_ins, new Docente(dni, nom, ape, dir, ins, tit, mat, hor, cos));
-                    System.out.println("\n----------\nUsted ha creado la siguiente entrada:\nCodigo unico: " + nombre_ins + '\n' + Empleados.get(nombre_ins).toString());
-                    System.out.println("\nPresione una tecla para continuar....");
-                    in.nextLine();
-                    idoc++;
-                    break;
-                case 2:
-                    nombre_ins = "Adm" + iadm;
-                    System.out.println("- Ingrese el DNI...");
-                    dni = in.nextInt();
-                    in.nextLine();
-                    System.out.println("- Ingrese el nombre...");
-                    nom = in.nextLine();
-                    System.out.println("- Ingrese el apellido...");
-                    ape = in.nextLine();
-                    System.out.println("- Ingrese la dirección...");
-                    dir = in.nextLine();
-                    System.out.println("- Ingrese la institución...");
-                    ins = in.nextLine();
-                    System.out.println("- Ingrese el area...");
-                    are = in.nextLine();
-                    System.out.println("- Ingrese el salario...");
-                    sal = in.nextDouble();
-                    Empleados.put(nombre_ins, new Administrativo(dni, nom, ape, dir, ins, are, sal));
-                    System.out.println("\n----------\nUsted ha creado la siguiente entrada:\nCodigo unico: " + nombre_ins + '\n' + Empleados.get(nombre_ins).toString());
-                    iadm++;
-                    break;
-                default:
-                    System.out.println("Opcion invalida, vuelva a intentarlo.");
-                    banderacre = true;
+                switch (tipor) {
+                    case 1:
+                        nombre_ins = "Doc" + idoc;
+                        System.out.println("\n----------\n- Ingrese el DNI...");
+                        dni = in.nextInt();
+                        in.nextLine(); //Consume el salto de linea que no consume el nextInt
+                        System.out.println("- Ingrese el nombre...");
+                        nom = in.nextLine();
+                        System.out.println("- Ingrese el apellido...");
+                        ape = in.nextLine();
+                        System.out.println("- Ingrese la dirección...");
+                        dir = in.nextLine();
+                        System.out.println("- Ingrese la institución...");
+                        ins = in.nextLine();
+                        System.out.println("- Ingrese el título...");
+                        tit = in.nextLine();
+                        System.out.println("- Ingrese la materia...");
+                        mat = in.nextLine();
+                        System.out.println("- Ingrese la cantidad de horas semanales...");
+                        hor = in.nextDouble();
+                        System.out.println("- Ingrese el valor por hora...");
+                        cos = in.nextDouble();
+                        in.nextLine(); //Consume el salto de linea que no consume el nextDouble
+                        Empleados.put(nombre_ins, new Docente(dni, nom, ape, dir, ins, tit, mat, hor, cos));
+                        System.out.println("\n----------\nUsted ha creado la siguiente entrada:\nCodigo unico: " + nombre_ins + '\n' + Empleados.get(nombre_ins).toString());
+                        Pausa();
+                        idoc++;
+                        break;
+                    case 2:
+                        nombre_ins = "Adm" + iadm;
+                        System.out.println("- Ingrese el DNI...");
+                        dni = in.nextInt();
+                        in.nextLine(); //Consume el salto de linea que no consume el nextInt
+                        System.out.println("- Ingrese el nombre...");
+                        nom = in.nextLine();
+                        System.out.println("- Ingrese el apellido...");
+                        ape = in.nextLine();
+                        System.out.println("- Ingrese la dirección...");
+                        dir = in.nextLine();
+                        System.out.println("- Ingrese la institución...");
+                        ins = in.nextLine();
+                        System.out.println("- Ingrese el area...");
+                        are = in.nextLine();
+                        System.out.println("- Ingrese el salario...");
+                        sal = in.nextDouble();
+                        in.nextLine(); //Consume el salto de linea que no consume el nextDouble
+                        Empleados.put(nombre_ins, new Administrativo(dni, nom, ape, dir, ins, are, sal));
+                        System.out.println("\n----------\nUsted ha creado la siguiente entrada:\nCodigo unico: " + nombre_ins + '\n' + Empleados.get(nombre_ins).toString());
+                        Pausa();
+                        iadm++;
+                        break;
+                    default:
+                        System.out.println("Opcion invalida, vuelva a intentarlo.");
+                        banderacre = true;
+                }
+            } catch (Exception e) {
+                System.out.println("El ingreso del campo debe ser numerico. Intente nuevamente" + '\n');
+                in.nextLine();
+                banderacre = true;
             }
         }
     }
@@ -155,7 +164,6 @@ public class Principal {
         int dnibusq;
 
         System.out.println("\n---------\nIngrese Codigo Unico o DNI para eliminar un registro:\n>");
-        in.nextLine();
         parambusq = in.nextLine();
 
         if (esDNI(parambusq)) {
@@ -192,6 +200,7 @@ public class Principal {
             }
         }
         System.out.println("<<No se encontraron registros con ese DNI>>");
+        Pausa();
         return null;
     }
 
@@ -213,121 +222,157 @@ public class Principal {
             }
         }
         else {
-            System.out.println("<<No se encontraron registros con ese CU>>");
+            System.out.println("<<No se encontraron registros con ese Codigo Unico>>");
         }
+        Pausa();
     }
 
     //Modifica datos segun CU o DNI
     public static void Modificar() {
         String parambusq;
-        int campo;
 
         System.out.println("\n---------\nIngrese Codigo Unico para editar un registro:\n>");
-        in.nextLine();
         parambusq = in.nextLine();
 
         if (Empleados.containsKey(parambusq)) {
-            System.out.println("\nRegistro encontrado, se muestran los datos correspondientes:" + Empleados.get(parambusq).toString());
-            System.out.println("\nPresione una tecla para continuar....");
+            System.out.println("\nRegistro encontrado, se muestran los datos correspondientes a <" + parambusq + ">:\n" + Empleados.get(parambusq).toString());
+            System.out.println("Presione una tecla para comenzar la edicion....");
             in.nextLine();
             ModificarCU(parambusq);
         } else {
             System.out.println("\n<<No se encontro ningun registro asociado a ese Codigo Unico>>\n");
+            Pausa();
         }
     }
 
     public static void ModificarCU (String param) {
-        int c=0, salida=10;
+        int c=1, salida=0;
         while (c != salida) {
+            try {
+                System.out.println("\nIngrese el numero de campo a editar:\n" + Empleados.get(param).campos() + "0- Finalizar edicion\n>");
+                c = in.nextInt();
+                in.nextLine(); //Consume el salto de linea que no consume el nextInt
 
-            System.out.println("\nIngrese el numero de campo a editar:\n" + Empleados.get(param).campos() + "0- Finalizar edicion\n");
-            c = in.nextInt();
-            in.nextLine(); //Consume el salto de linea que no consume el nextInt
-
-            switch (c) {
-                case 1: {
-                    System.out.println("\nEl DNI actual es <" + Empleados.get(param).getDni() + ">, ingrese el nuevo DNI:\n>");
-                    Empleados.get(param).setDni(in.nextInt());
-                    in.nextLine();
-                    break;
-                }
-                case 2: {
-                    System.out.println("\nEl Nombre actual es <" + Empleados.get(param).getNombre() + ">, ingrese el nuevo Nombre:\n>");
-                    Empleados.get(param).setNombre(in.nextLine());
-                    break;
-                }
-                case 3: {
-                    System.out.println("\nEl Apellido actual es <" + Empleados.get(param).getApellido() + ">, ingrese el nuevo Apellido:\n>");
-                    Empleados.get(param).setApellido(in.nextLine());
-                    break;
-                }
-                case 4: {
-                    System.out.println("\nLa Direccion actual es <" + Empleados.get(param).getDireccion() + ">, ingrese la nueva Direccion:\n>");
-                    Empleados.get(param).setDireccion(in.nextLine());
-                    break;
-                }
-                case 5: {
-                    System.out.println("\nLa Institucion actual es <" + Empleados.get(param).getInstitucion() + ">, ingrese la nueva Institucion:\n>");
-                    Empleados.get(param).setInstitucion(in.nextLine());
-                    break;
-                }
-                case 0: {
-                    System.out.println("\n<<Edicion finalizada>>\n");
-                    break;
-                }
-                default:
-            }
-
-            if (Empleados.get(param) instanceof Docente) {
                 switch (c) {
-                    case 6: {
-                        System.out.println("\nEl Titulo actual es <" + ((Docente) Empleados.get(param)).getTitulo() + ">, ingrese el nuevo Titulo:\n>");
-                        ((Docente) Empleados.get(param)).setTitulo(in.nextLine());
+                    case 1: {
+                        System.out.println("\nEl DNI actual es <" + Empleados.get(param).getDni() + ">, ingrese el nuevo DNI:\n>");
+                        Empleados.get(param).setDni(in.nextInt());
+                        in.nextLine();
                         break;
                     }
-                    case 7: {
-                        System.out.println("\nLa Materia actual es <" + ((Docente) Empleados.get(param)).getMateria() + ">, ingrese la nueva Materia:\n>");
-                        ((Docente) Empleados.get(param)).setMateria(in.nextLine());
+                    case 2: {
+                        System.out.println("\nEl Nombre actual es <" + Empleados.get(param).getNombre() + ">, ingrese el nuevo Nombre:\n>");
+                        Empleados.get(param).setNombre(in.nextLine());
                         break;
                     }
-                    case 8: {
-                        System.out.println("\nLa Cantidad de Horas Semanales actual es <" + ((Docente) Empleados.get(param)).getHoras() + ">, ingrese la nueva cantidad:\n>");
-                        ((Docente) Empleados.get(param)).setHoras(in.nextDouble());
+                    case 3: {
+                        System.out.println("\nEl Apellido actual es <" + Empleados.get(param).getApellido() + ">, ingrese el nuevo Apellido:\n>");
+                        Empleados.get(param).setApellido(in.nextLine());
                         break;
                     }
-                    case 9: {
-                        System.out.println("\nEl Monto por Hora actual es <" + ((Docente) Empleados.get(param)).getCostoH() + ">, ingrese el nuevo monto:\n>");
-                        ((Docente) Empleados.get(param)).setCostoh(in.nextDouble());
+                    case 4: {
+                        System.out.println("\nLa Direccion actual es <" + Empleados.get(param).getDireccion() + ">, ingrese la nueva Direccion:\n>");
+                        Empleados.get(param).setDireccion(in.nextLine());
                         break;
                     }
-                    case 10: {
+                    case 5: {
+                        System.out.println("\nLa Institucion actual es <" + Empleados.get(param).getInstitucion() + ">, ingrese la nueva Institucion:\n>");
+                        Empleados.get(param).setInstitucion(in.nextLine());
+                        break;
+                    }
+                    case 0: {
                         System.out.println("\n<<Edicion finalizada>>\n");
+                        Pausa();
                         break;
                     }
-                    default: {
-                        System.out.println("\nOpcion incorrecta, vuelva a intentarlo");
+                    default:
+                }
+
+                if (c != 0) {
+                    if (Empleados.get(param) instanceof Docente) {
+                        switch (c) {
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 5:
+                                break;
+                            case 6: {
+                                System.out.println("\nEl Titulo actual es <" + ((Docente) Empleados.get(param)).getTitulo() + ">, ingrese el nuevo Titulo:\n>");
+                                ((Docente) Empleados.get(param)).setTitulo(in.nextLine());
+                                break;
+                            }
+                            case 7: {
+                                System.out.println("\nLa Materia actual es <" + ((Docente) Empleados.get(param)).getMateria() + ">, ingrese la nueva Materia:\n>");
+                                ((Docente) Empleados.get(param)).setMateria(in.nextLine());
+                                break;
+                            }
+                            case 8: {
+                                try {
+                                    System.out.println("\nLa Cantidad de Horas Semanales actual es <" + ((Docente) Empleados.get(param)).getHoras() + ">, ingrese la nueva cantidad:\n>");
+                                    ((Docente) Empleados.get(param)).setHoras(in.nextDouble());
+                                } catch (Exception e) {
+                                    System.out.println("Incorrecto, el ingreso deber ser numerico, vuelva a intentarlo");
+                                    in.nextLine(); //Consume el salto de linea que no consume el nextDouble
+                                    Pausa();
+                                }
+                                break;
+                            }
+                            case 9: {
+                                try {
+                                    System.out.println("\nEl Monto por Hora actual es <" + ((Docente) Empleados.get(param)).getCostoH() + ">, ingrese el nuevo monto:\n>");
+                                    ((Docente) Empleados.get(param)).setCostoh(in.nextDouble());
+                                } catch (Exception e) {
+                                    System.out.println("Incorrecto, el ingreso debe ser numerico, vuelva a intentarlo");
+                                    in.nextLine(); //Consume el salto de linea que no consume el nextDouble
+                                    Pausa();
+                                }
+                                break;
+                            }
+                            case 0: {
+                                System.out.println("\n<<Edicion finalizada>>\n");
+                                Pausa();
+                                break;
+                            }
+                            default: {
+                                System.out.println("\nOpcion incorrecta, vuelva a intentarlo");
+                                Pausa();
+                            }
+                        }
+                    } else if (Empleados.get(param) instanceof Administrativo) {
+                        switch (c) {
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 5:
+                                break;
+                            case 6: {
+                                System.out.println("\nEl Area actual es <" + ((Administrativo) Empleados.get(param)).getArea() + ">, ingrese el nuevo Area:\n>");
+                                ((Administrativo) Empleados.get(param)).setArea(in.nextLine());
+                                break;
+                            }
+                            case 7: {
+                                System.out.println("\nEl Salario actual es <" + ((Administrativo) Empleados.get(param)).getSalario() + ">, ingrese el nuevo Salario:\n>");
+                                ((Administrativo) Empleados.get(param)).setSalario(in.nextDouble());
+                                break;
+                            }
+                            case 0: {
+                                System.out.println("\n<<Edicion finalizada>>\n");
+                                Pausa();
+                                break;
+                            }
+                            default: {
+                                System.out.println("\nOpcion incorrecta, vuelva a intentarlo");
+                                Pausa();
+                            }
+                        }
                     }
                 }
-            } else if (Empleados.get(param) instanceof Administrativo) {
-                switch (c) {
-                    case 6: {
-                        System.out.println("\nEl Area actual es <" + ((Administrativo) Empleados.get(param)).getArea() + ">, ingrese el nuevo Area:\n>");
-                        ((Administrativo) Empleados.get(param)).setArea(in.nextLine());
-                        break;
-                    }
-                    case 7: {
-                        System.out.println("\nEl Salario actual es <" + ((Administrativo) Empleados.get(param)).getSalario() + ">, ingrese el nuevo Salario:\n>");
-                        ((Administrativo) Empleados.get(param)).setSalario(in.nextDouble());
-                        break;
-                    }
-                    case 10: {
-                        System.out.println("\n<<Edicion finalizada>>\n");
-                        break;
-                    }
-                    default: {
-                        System.out.println("\nOpcion incorrecta, vuelva a intentarlo");
-                    }
-                }
+            } catch (Exception e) {
+                System.out.println("La opcion debe ser un numero entero, intente nuevamente.");
+                in.nextLine(); //Consume el salto de linea que no consume el nextInt y que no llega a consumir el nextLine anterior por la exception
+                Pausa();
             }
         }
     }
@@ -339,13 +384,12 @@ public class Principal {
         System.out.println("\n----------\nIngrese Codigo Unico para visualizar informacion:\n>");
         cu = in.nextLine();
         if (Empleados.containsKey(cu)) {
-            System.out.println("\nEmpleado encontrado:\n> " + Empleados.get(cu).toString());
+            System.out.println("\nEmpleado encontrado:\n" + Empleados.get(cu).toString());
         }
         else {
             System.out.println("\n<<No se encontro ningun empleado con ese codigo>>\n");
-            System.out.println("Presione una tecla para continuar....");
-            in.nextLine();
         }
+        Pausa();
     }
 
     //Muestra Administrativos
@@ -356,8 +400,7 @@ public class Principal {
                 System.out.println(Empleados.get(key).toString() + "\n----------\n");
             }
         }
-        System.out.println("Presione una tecla para continuar....");
-        in.nextLine();
+        Pausa();
     }
 
     //Muestra Docentes
@@ -368,8 +411,7 @@ public class Principal {
                 System.out.println(Empleados.get(key).toString() + "\n----------\n");
             }
         }
-        System.out.println("Presione una tecla para continuar....");
-        in.nextLine();
+        Pausa();
     }
 
     //Muestra el Administrativo de mayor sueldo
@@ -386,8 +428,7 @@ public class Principal {
             }
         }
         System.out.println("\nEl Administrativo de mayor sueldo es: \n" + Empleados.get(key_max).toString()+"\n");
-        System.out.println("Presione una tecla para continuar....");
-        in.nextLine();
+        Pausa();
     }
 
     //Muestra Docentes segun materia
@@ -410,8 +451,13 @@ public class Principal {
         }
         if (!control) {
             System.out.println("<<No se encontraron Docentes asociados a la materia " + mat + ">>\n");
-            System.out.println("Presione una tecla para continuar....");
-            in.nextLine();
         }
+        Pausa();
+    }
+
+    public static void Pausa() {
+        System.out.println("\nPresione una tecla para continuar....");
+        in.nextLine();
+        System.out.println("\n----------\n");
     }
 }
