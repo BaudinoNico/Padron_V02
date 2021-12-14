@@ -20,9 +20,9 @@ public class Principal {
         int opcion = 0, salida = 9;
 
         //Empleados para probar funcionalidad
-        Empleados.put("Doc0", new Docente(33069335, "Nico", "Bau", "Esp 1960", "Poli", "Arq", "Dib", 8, 650));
-        Empleados.put("Doc1", new Docente(33562331, "Gime", "Can", "Esp 1916", "Lat", "Arq", "Const", 16, 800));
-        Empleados.put("Adm0", new Administrativo(12621880, "Cata", "Soto", "Rio 333", "Lat", "Cobr", 70000));
+        //Empleados.put("Doc0", new Docente(33069335, "Nico", "Bau", "Esp 1960", "Poli", "Arq", "Dib", 8, 650));
+        //Empleados.put("Doc1", new Docente(33562331, "Gime", "Can", "Esp 1916", "Lat", "Arq", "Const", 16, 800));
+        //Empleados.put("Adm0", new Administrativo(12621880, "Cata", "Soto", "Rio 333", "Lat", "Cobr", 70000));
         //Empleados para probar funcionalidad
 
         DateTimeFormatter dia = DateTimeFormatter.ofPattern("dd/MM/yyyy");
