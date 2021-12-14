@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.time.format.DateTimeFormatter;
@@ -8,8 +7,6 @@ public class Principal {
     private static int idoc=0, iadm=0;
     private static Map<String,Empleado> Empleados = new TreeMap<String,Empleado>();
     private static Scanner in = new Scanner(System.in);
-    //private static File count = new File("counter");
-    //private static CounterP indices = new CounterP();
 
     public static void main(String[] args) throws IOException {
         iadm = CounterP.Leer()[0];
@@ -18,12 +15,6 @@ public class Principal {
         Empleados=Handler.Leer();
 
         int opcion = 0, salida = 9;
-
-        //Empleados para probar funcionalidad
-        Empleados.put("Doc0", new Docente(33069335, "Nico", "Bau", "Esp 1960", "Poli", "Arq", "Dib", 8, 650));
-        Empleados.put("Doc1", new Docente(33562331, "Gime", "Can", "Esp 1916", "Lat", "Arq", "Const", 16, 800));
-        Empleados.put("Adm0", new Administrativo(12621880, "Cata", "Soto", "Rio 333", "Lat", "Cobr", 70000));
-        //Empleados para probar funcionalidad
 
         DateTimeFormatter dia = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter hora = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -77,8 +68,8 @@ public class Principal {
                         ListDocMateria();
                         break;
                     case 9:
-                        System.out.println("Saliendo, hasta luego!");
                         Handler.Guardar(Empleados);
+                        System.out.println("Saliendo, hasta luego!");
                         break;
                     default:
                         System.out.println("Opcion invalida, intente nuevamente" + '\n');
@@ -341,11 +332,6 @@ public class Principal {
                                 }
                                 break;
                             }
-                            case 0: {
-                                System.out.println("\n<<Edicion finalizada>>\n");
-                                Pausa();
-                                break;
-                            }
                             default: {
                                 System.out.println("\nOpcion incorrecta, vuelva a intentarlo");
                                 Pausa();
@@ -367,11 +353,6 @@ public class Principal {
                             case 7: {
                                 System.out.println("\nEl Salario actual es <" + ((Administrativo) Empleados.get(param)).getSalario() + ">, ingrese el nuevo Salario:\n>");
                                 ((Administrativo) Empleados.get(param)).setSalario(in.nextDouble());
-                                break;
-                            }
-                            case 0: {
-                                System.out.println("\n<<Edicion finalizada>>\n");
-                                Pausa();
                                 break;
                             }
                             default: {
@@ -396,7 +377,7 @@ public class Principal {
         System.out.println("\n----------\nIngrese Codigo Unico para visualizar informacion:\n>");
         cu = in.nextLine();
         if (Empleados.containsKey(cu)) {
-            System.out.println("\nEmpleado encontrado:\n" + Empleados.get(cu).toString());
+            System.out.println("\nEmpleado encontrado:\n" + "- Codigo Unico = " + cu + "\n" + Empleados.get(cu).toString());
         }
         else {
             System.out.println("\n<<No se encontro ningun empleado con ese codigo>>\n");
@@ -409,6 +390,7 @@ public class Principal {
         System.out.println("\n----------\nLos empleados administrativos son:\n");
         for(Object key : Empleados.keySet()) {
             if (Empleados.get(key) instanceof Administrativo) {
+                System.out.println("- Codigo Unico = " + key);
                 System.out.println(Empleados.get(key).toString() + "\n----------\n");
             }
         }
@@ -420,6 +402,7 @@ public class Principal {
         System.out.println("\n----------\nLos empleados docentes son:\n");
         for(Object key : Empleados.keySet()) {
             if (Empleados.get(key) instanceof Docente) {
+                System.out.println("- Codigo Unico = " + key);
                 System.out.println(Empleados.get(key).toString() + "\n----------\n");
             }
         }
@@ -439,7 +422,7 @@ public class Principal {
                 }
             }
         }
-        System.out.println("\nEl Administrativo de mayor sueldo es: \n" + Empleados.get(key_max).toString()+"\n");
+        System.out.println("\nEl Administrativo de mayor sueldo es: \n" + "- Codigo Unico = " + key_max + "\n" + Empleados.get(key_max).toString()+"\n");
         Pausa();
     }
 
@@ -456,6 +439,7 @@ public class Principal {
         for(String key : Empleados.keySet()) {
             if (Empleados.get(key) instanceof Docente) {
                 if (Objects.equals(mat, ((Docente) Empleados.get(key)).getMateria())) {
+                    System.out.println("- Codigo Unico = " + key);
                     System.out.println(Empleados.get(key).toString() + "\n----------\n");
                     control = true;
                 }

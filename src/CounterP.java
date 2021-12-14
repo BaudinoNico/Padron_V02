@@ -6,22 +6,16 @@
 import java.io.*;
 
 public class CounterP {
-    private int[] result = new int[2];
-
-    public CounterP() {
-    }
-
     public static int[] Leer() throws IOException {
         File arch= new File ( "counters");
+        int[] result = new int[2];
         if (arch.exists()) {
-            int[] result = new int[2];
             FileReader lector = new FileReader(arch);
             BufferedReader bLector = new BufferedReader(lector);
             result[0] = Integer.parseInt(bLector.readLine());
             result[1] = Integer.parseInt(bLector.readLine());
             return result;
         } else {
-            int[] result = new int[2];
             FileWriter fwescribir= new FileWriter(arch);
             BufferedWriter bwescribir= new BufferedWriter (fwescribir);
             bwescribir.write("0");

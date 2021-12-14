@@ -8,13 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Handler {
-    //private static Map<String, Empleado> Empleados = new TreeMap<String, Empleado>();
-
-    public Handler() {
-    }
-
-    public static void Guardar(Map<String,Empleado> Emp) {
-        //Map<String, Empleado> Empleados2 = new TreeMap<String, Empleado>();;
+     public static void Guardar(Map<String,Empleado> Emp) {
         try {
             FileOutputStream guardado = new FileOutputStream("Empleados.ser");
             ObjectOutputStream out = new ObjectOutputStream(guardado);
