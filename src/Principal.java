@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
@@ -6,13 +8,20 @@ public class Principal {
     private static int idoc=0, iadm=0;
     private static Map<String,Empleado> Empleados = new TreeMap<String,Empleado>();
     private static Scanner in = new Scanner(System.in);
+    //private static File count = new File("counter");
+    //private static CounterP indices = new CounterP();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        iadm = CounterP.Leer()[0];
+        idoc = CounterP.Leer()[1];
+
+        Empleados=Handler.Leer();
+
         int opcion = 0, salida = 9;
 
         //Empleados para probar funcionalidad
-        Empleados.put("Doce0", new Docente(33069335, "Nico", "Bau", "Esp 1960", "Poli", "Arq", "Dib", 8, 650));
-        Empleados.put("Doce1", new Docente(33562331, "Gime", "Can", "Esp 1916", "Lat", "Arq", "Const", 16, 800));
+        Empleados.put("Doc0", new Docente(33069335, "Nico", "Bau", "Esp 1960", "Poli", "Arq", "Dib", 8, 650));
+        Empleados.put("Doc1", new Docente(33562331, "Gime", "Can", "Esp 1916", "Lat", "Arq", "Const", 16, 800));
         Empleados.put("Adm0", new Administrativo(12621880, "Cata", "Soto", "Rio 333", "Lat", "Cobr", 70000));
         //Empleados para probar funcionalidad
 
@@ -69,6 +78,7 @@ public class Principal {
                         break;
                     case 9:
                         System.out.println("Saliendo, hasta luego!");
+                        Handler.Guardar(Empleados);
                         break;
                     default:
                         System.out.println("Opcion invalida, intente nuevamente" + '\n');
@@ -123,6 +133,7 @@ public class Principal {
                         System.out.println("\n----------\nUsted ha creado la siguiente entrada:\nCodigo unico: " + nombre_ins + '\n' + Empleados.get(nombre_ins).toString());
                         Pausa();
                         idoc++;
+                        CounterP.Guardar(iadm,idoc);
                         break;
                     case 2:
                         nombre_ins = "Adm" + iadm;
@@ -146,6 +157,7 @@ public class Principal {
                         System.out.println("\n----------\nUsted ha creado la siguiente entrada:\nCodigo unico: " + nombre_ins + '\n' + Empleados.get(nombre_ins).toString());
                         Pausa();
                         iadm++;
+                        CounterP.Guardar(iadm,idoc);
                         break;
                     default:
                         System.out.println("Opcion invalida, vuelva a intentarlo.");

@@ -1,4 +1,6 @@
-public class Docente extends Empleado {
+import java.io.Serializable;
+
+public class Docente extends Empleado implements Serializable {
     String titulo,materia;
     double horas,costoH;
 

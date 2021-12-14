@@ -1,4 +1,6 @@
-public class Administrativo extends Empleado {
+import java.io.Serializable;
+
+public class Administrativo extends Empleado implements Serializable {
     String area;
     double salario;
 

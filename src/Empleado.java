@@ -1,4 +1,6 @@
-public abstract class Empleado{
+import java.io.Serializable;
+
+public abstract class Empleado implements Serializable {
     private int dni;
     private String nombre,apellido,direccion,institucion;
 
